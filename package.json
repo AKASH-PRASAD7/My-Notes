@@ -1,0 +1,19 @@
+{
+  "name": "my-notes",
+  "version": "1.0.0",
+  "description": "notes application for taking notes",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AKASH-PRASAD7/My-Notes.git"
+  },
+  "author": "akash",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AKASH-PRASAD7/My-Notes/issues"
+  },
+  "homepage": "https://github.com/AKASH-PRASAD7/My-Notes#readme"
+}
