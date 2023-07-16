@@ -24,4 +24,4 @@ app.listen(port, () => {
 
 //Routing
 
-app.use("/signin", auth);
+app.use("/auth", auth);

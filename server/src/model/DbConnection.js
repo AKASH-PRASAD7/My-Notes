@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-const URI = process.env.MONGO_URI;
+const URI = "mongodb+srv://akash:1234@cluster0.taf5rwu.mongodb.net/";
 // console.log(process.env.MONGO_URI);
 
 const connectToMongoDb = async () => {
