@@ -1,6 +1,9 @@
 import express from "express";
 const router = express.Router();
-import { ValidateSignup } from "../../validation/Auth.validation";
+import {
+  ValidateSignup,
+  ValidateSignin,
+} from "../../validation/Auth.validation";
 import { UserModel } from "../../model/user/User.Model";
 
 /**
@@ -16,6 +19,8 @@ router.post("/signup", async (req, res) => {
     await ValidateSignup(req.body.credentials);
     await UserModel.find({ email: req.body.credentials.email });
     const newUser = await UserModel.create(req.body.credentials);
+    const token = newUser.genrateJwtToken();
+    console.log(token);
     if (!newUser) {
       return res.status(500).json({
         status: "failed",
@@ -25,6 +30,7 @@ router.post("/signup", async (req, res) => {
     return res.status(200).json({
       status: "success",
       message: newUser,
+      token: token,
     });
   } catch (error) {
     return res.status(500).json({ status: "failed", message: error.message });
@@ -38,14 +44,18 @@ router.post("/signup", async (req, res) => {
  * Access    Public
  * Method    POST
  */
-router.post("/signin", (req, res) => {
+router.post("/signin", async (req, res) => {
   try {
-    return res.status(200).json({
-      success: true,
-      message: "Working!",
-    });
+    await ValidateSignin(req.body.credentials);
+    const user = await UserModel.findOne({ email: req.body.credentials.email });
+    if (!user) {
+      return res
+        .status(404)
+        .json({ status: "failed", message: "Invalid Credentials" });
+    }
+    return res.status(200).json({ status: "success", message: user });
   } catch (error) {
-    console.log("Server error at auth/signin: ", error);
+    return res.status(500).json({ status: "failed", message: error.message });
   }
 });
 
