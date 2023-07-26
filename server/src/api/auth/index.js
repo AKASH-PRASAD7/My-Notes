@@ -4,10 +4,10 @@ import {
   ValidateSignup,
   ValidateSignin,
 } from "../../validation/Auth.validation";
-import { UserModel } from "../../model/user/User.Model";
+import UserModel from "../../model/user/User.Model";
 
 /**
- * Route     /auth/signup
+ * Route     /user/signup
  * Des       Create new user
  * Params    none
  * Access    Public
@@ -17,23 +17,15 @@ import { UserModel } from "../../model/user/User.Model";
 router.post("/signup", async (req, res) => {
   try {
     await ValidateSignup(req.body.credentials);
-    await UserModel.find({ email: req.body.credentials.email });
     const newUser = await UserModel.create(req.body.credentials);
-    const token = newUser.genrateJwtToken();
-    console.log(token);
-    if (!newUser) {
-      return res.status(500).json({
-        status: "failed",
-        message: "failed to create",
-      });
-    }
-    return res.status(200).json({
-      status: "success",
-      message: newUser,
-      token: token,
+    const token = await newUser.genrateJwtToken();
+    res.cookie("jwtToken", token, {
+      httpOnly: true,
+      expires: new Date(Date.now() + 600000),
     });
-  } catch (error) {
-    return res.status(500).json({ status: "failed", message: error.message });
+    return res.status(201).json({ success: true, token });
+  } catch (e) {
+    return res.status(403).json({ message: "Failed to signup :", error: e });
   }
 });
 
@@ -45,18 +37,7 @@ router.post("/signup", async (req, res) => {
  * Method    POST
  */
 router.post("/signin", async (req, res) => {
-  try {
-    await ValidateSignin(req.body.credentials);
-    const user = await UserModel.findOne({ email: req.body.credentials.email });
-    if (!user) {
-      return res
-        .status(404)
-        .json({ status: "failed", message: "Invalid Credentials" });
-    }
-    return res.status(200).json({ status: "success", message: user });
-  } catch (error) {
-    return res.status(500).json({ status: "failed", message: error.message });
-  }
+  res.send("signin");
 });
 
 export default router;

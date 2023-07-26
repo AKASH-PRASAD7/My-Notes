@@ -15,34 +15,25 @@ const UserSchema = new Schema(
 );
 
 //attachments
-UserSchema.methods.genrateJwtToken = () => {
+UserSchema.methods.genrateJwtToken = function () {
   try {
-    return jwt.sign({ user: this._id.toString() }, "akash");
+    return jwt.sign({ user: this._id.toString() }, process.env.SECRET_KEY);
   } catch (error) {
     return error;
   }
 };
 
 //helper functions
-UserSchema.pre("save", function (next) {
-  const user = this;
-
-  //pass is modified
-  if (!user.isModified("password")) return next();
-
-  //salting pass
-  bcrypt.genSalt(2, (error, salt) => {
-    if (error) return next(error);
-
-    //hashing
-    bcrypt.hash(user.password, salt, (error, hash) => {
-      if (error) {
-        return next(error);
-      }
-      user.password = hash;
-      return next();
-    });
-  });
+UserSchema.pre("save", async function (next) {
+  try {
+    if (this.isModified("password")) {
+      this.password = await bcrypt.hash(this.password, 10);
+    } else {
+      next();
+    }
+  } catch (e) {
+    return e;
+  }
 });
 
-export const UserModel = mongoose.model("users", UserSchema);
+module.exports = mongoose.model("users", UserSchema);
