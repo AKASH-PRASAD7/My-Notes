@@ -14,7 +14,7 @@ const UserSchema = new Schema(
   }
 );
 
-//attachments
+//method
 UserSchema.methods.genrateJwtToken = function () {
   try {
     return jwt.sign({ user: this._id.toString() }, process.env.SECRET_KEY);
@@ -22,8 +22,29 @@ UserSchema.methods.genrateJwtToken = function () {
     return error;
   }
 };
+//statics
+UserSchema.statics.findEmail = async (email) => {
+  const user = await UserModel.findOne({ email });
+  if (user) {
+    throw new Error("User with this Email already exists...");
+  }
+  return false;
+};
 
-//helper functions
+UserSchema.statics.signInUser = async ({ email, password }) => {
+  const user = await UserModel.findOne({ email });
+  if (user) {
+    if (await bcrypt.compare(password, user.password)) {
+      const token = user.genrateJwtToken();
+      return token;
+    } else {
+      throw new Error("Invalid login details");
+    }
+  } else {
+    throw new Error("No account found with this email");
+  }
+};
+
 UserSchema.pre("save", async function (next) {
   try {
     if (this.isModified("password")) {
@@ -36,4 +57,5 @@ UserSchema.pre("save", async function (next) {
   }
 });
 
-module.exports = mongoose.model("users", UserSchema);
+const UserModel = mongoose.model("users", UserSchema);
+module.exports = UserModel;
