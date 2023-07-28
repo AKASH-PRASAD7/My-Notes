@@ -5,6 +5,7 @@ import {
   ValidateSignin,
 } from "../../validation/Auth.validation";
 import UserModel from "../../model/user/User.Model";
+import verifyCookie from "../../middleware/index";
 
 /**
  * Route     /auth/signup
@@ -57,6 +58,25 @@ router.post("/signin", async (req, res) => {
     res.status(404).json({ success: false, error: e.message });
   }
 });
+
+/**
+ * Route     /auth/signOut
+ * Des       sign in to existing account
+ * Params    none
+ * Cookies   required
+ * Access    Private
+ * Method    POST
+ */
+
+router.post("/signout", verifyCookie, (req, res) => {
+  try {
+    res.clearCookie("jwtToken");
+    res.status(200).json({ success: true, message: "signout successfully" });
+  } catch (e) {
+    res.status(404).json({ success: false, error: e.message });
+  }
+});
+
 router.get("*", (req, res) => {
   return res.status(404).send("Page Not Found!");
 });
