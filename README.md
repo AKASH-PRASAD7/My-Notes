@@ -1,5 +1,3 @@
-## My Notes is a Note taking application with all CRUD Functionalities
-
 # My Notes App :notebook:
 
 Welcome to My Notes App! This is a simple and intuitive web application that allows you to create, manage, and organize your personal notes. The app is built using the MERN stack, which consists of MongoDB, Express.js, React, and Node.js. It utilizes bcrypt for password hashing, JWT token-based authentication and authorization, and cookies for session management, and middleware for additional security and functionality.
