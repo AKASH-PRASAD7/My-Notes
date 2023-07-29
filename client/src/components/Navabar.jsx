@@ -16,7 +16,7 @@ const Navabar = () => {
   };
   return (
     <>
-      <nav className="w-vw sticky top-0 bg-gray-900 text-white h-16 flex justify-between px-4 items-center gap-2 relative">
+      <nav className="w-vw z-10 sticky top-0 bg-gray-900 text-white h-16 flex justify-between px-4 items-center gap-2 relative">
         <div className="flex item-center gap-6">
           <div className="flex gap-2 items-center">
             <img className="w-10 " src={Notelogo} alt="logo" />

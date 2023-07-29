@@ -1,7 +1,63 @@
 import React from "react";
+import { FaPencil, FaTrashCan } from "react-icons/fa6";
 
-const NoteCard = () => {
-  return <div>NoteCard</div>;
+const NoteCard = ({ title, type, description, createdAt }) => {
+  return (
+    <>
+      <section className="flex-col  gap-4 w-48  rounded-lg bg-purple-800">
+        <div className="flex px-2 pt-2 pb-2 bg-purple-900 rounded-t-lg justify-between">
+          <i className="hover:text-cyan-700 text-lg cursor-pointer">
+            <FaPencil />
+          </i>
+          <i className="hover:text-red-600 text-lg cursor-pointer">
+            <FaTrashCan />
+          </i>
+        </div>
+        <div className="flex flex-col mt-4 justify-center">
+          <label htmlFor="title" className="ml-2">
+            Title:
+          </label>
+          <input
+            className="text-cyan-800   rounded-lg px-2 outline-none m-2"
+            type="text"
+            name="title"
+            id="title"
+            value={title}
+          />
+          <label htmlFor="type" className="ml-2">
+            Type:
+          </label>
+          <input
+            className="text-cyan-800  rounded-lg px-2 outline-none m-2"
+            type="text"
+            name="type"
+            id="type"
+            value={type}
+          />
+          <label htmlFor="description" className="ml-2">
+            Description:
+          </label>
+          <input
+            className="text-cyan-800  rounded-lg px-2 outline-none m-2"
+            type="text"
+            name="description"
+            id="description"
+            value={description}
+          />
+          <label htmlFor="createdAt" className="ml-2">
+            Created At:
+          </label>
+          <input
+            className="text-cyan-800  rounded-lg px-2 outline-none m-2"
+            type="text"
+            name="createdAt"
+            id="createdAt"
+            value={createdAt}
+          />
+        </div>
+      </section>
+    </>
+  );
 };
 
 export default NoteCard;

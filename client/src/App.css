@@ -1,3 +1,6 @@
 body {
   background-color: rgb(18, 13, 18);
 }
+.MuiContainer-root {
+  height: 100vh;
+}
