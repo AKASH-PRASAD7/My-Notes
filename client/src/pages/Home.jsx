@@ -2,7 +2,7 @@ import React from "react";
 import Navabar from "../components/Navabar";
 import NoteCardContainer from "../components/NoteCardContainer";
 
-const home = () => {
+const Home = () => {
   return (
     <>
       <Navabar />
@@ -11,4 +11,4 @@ const home = () => {
   );
 };
 
-export default home;
+export default Home;

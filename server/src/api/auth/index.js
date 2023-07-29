@@ -24,6 +24,7 @@ router.post("/signup", async (req, res) => {
     res.cookie("jwtToken", token, {
       httpOnly: true,
       expires: new Date(Date.now() + 600000),
+      sameSite: "none",
     });
     return res.status(201).json({ success: true, token });
   } catch (e) {
@@ -48,6 +49,7 @@ router.post("/signin", async (req, res) => {
       res.cookie("jwtToken", token, {
         httpOnly: true,
         expires: new Date(Date.now() + 600000),
+        sameSite: "none",
       });
       return res.status(200).json({ success: true, token: token });
     }

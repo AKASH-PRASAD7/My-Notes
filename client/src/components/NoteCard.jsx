@@ -20,6 +20,7 @@ const NoteCard = ({ title, type, description, createdAt }) => {
           <input
             className="text-cyan-800   rounded-lg px-2 outline-none m-2"
             type="text"
+            readOnly
             name="title"
             id="title"
             value={title}
@@ -30,6 +31,7 @@ const NoteCard = ({ title, type, description, createdAt }) => {
           <input
             className="text-cyan-800  rounded-lg px-2 outline-none m-2"
             type="text"
+            readOnly
             name="type"
             id="type"
             value={type}
@@ -41,6 +43,7 @@ const NoteCard = ({ title, type, description, createdAt }) => {
             className="text-cyan-800  rounded-lg px-2 outline-none m-2"
             type="text"
             name="description"
+            readOnly
             id="description"
             value={description}
           />
@@ -51,6 +54,7 @@ const NoteCard = ({ title, type, description, createdAt }) => {
             className="text-cyan-800  rounded-lg px-2 outline-none m-2"
             type="text"
             name="createdAt"
+            readOnly
             id="createdAt"
             value={createdAt}
           />

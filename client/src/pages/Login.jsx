@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import "../App.css";
 
@@ -14,6 +14,10 @@ import logo from "../Images/MyNote-logo.png";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+
+//redux
+import { useSelector, useDispatch } from "react-redux";
+import { signIn } from "../redux/user/action";
 
 function Copyright(props) {
   return (
@@ -40,15 +44,24 @@ function Copyright(props) {
 
 const defaultTheme = createTheme();
 
-const login = () => {
+const Login = () => {
+  const dispatch = useDispatch();
+  const state = useSelector((globalstate) => globalstate.user.data);
+
+  let userData = {};
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
+    userData = {
       email: data.get("email"),
       password: data.get("password"),
-    });
+    };
+    dispatch(signIn(userData));
   };
+
+  useEffect(() => {
+    console.log(state);
+  }, [state]);
   return (
     <>
       <header>
@@ -130,4 +143,4 @@ const login = () => {
   );
 };
 
-export default login;
+export default Login;

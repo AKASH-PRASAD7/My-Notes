@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import "dotenv/config";
 import DbConnection from "./model/DbConnection";
 import auth from "./api/auth";
@@ -6,6 +7,7 @@ import user from "./api/User";
 import notes from "./api/notes";
 import cookieParser from "cookie-parser";
 const app = express();
+app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 
