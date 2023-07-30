@@ -36,7 +36,7 @@ UserSchema.statics.signInUser = async ({ email, password }) => {
   if (user) {
     if (await bcrypt.compare(password, user.password)) {
       const token = user.genrateJwtToken();
-      return token;
+      return { token, name: user.name };
     } else {
       throw new Error("Invalid login details");
     }

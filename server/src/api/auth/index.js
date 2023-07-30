@@ -22,11 +22,9 @@ router.post("/signup", async (req, res) => {
     const newUser = await UserModel.create(req.body.credentials);
     const token = await newUser.genrateJwtToken();
     res.cookie("jwtToken", token, {
-      httpOnly: true,
       expires: new Date(Date.now() + 600000),
-      sameSite: "none",
     });
-    return res.status(201).json({ success: true, token });
+    return res.status(201).json({ success: true, name: newUser.name, token });
   } catch (e) {
     return res
       .status(403)
@@ -44,14 +42,12 @@ router.post("/signup", async (req, res) => {
 router.post("/signin", async (req, res) => {
   try {
     await ValidateSignin(req.body.credentials);
-    const token = await UserModel.signInUser(req.body.credentials);
+    const { token, name } = await UserModel.signInUser(req.body.credentials);
     if (token) {
       res.cookie("jwtToken", token, {
-        httpOnly: true,
         expires: new Date(Date.now() + 600000),
-        sameSite: "none",
       });
-      return res.status(200).json({ success: true, token: token });
+      return res.status(200).json({ success: true, name, token });
     }
     return res
       .status(500)

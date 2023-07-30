@@ -1,6 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useState, useLayoutEffect } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "../App.css";
+import getCookie from "../utils/getCookie";
 
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -45,6 +47,11 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 const Login = () => {
+  //cookie
+  const [cookie, setCookie] = useState();
+  setCookie(getCookie("jwtToken"));
+
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const state = useSelector((globalstate) => globalstate.user.data);
 
@@ -59,9 +66,14 @@ const Login = () => {
     dispatch(signIn(userData));
   };
 
-  useEffect(() => {
-    console.log(state);
-  }, [state]);
+  // useLayoutEffect(() => {
+  //   if (cookie) {
+  //     navigate("/home");
+  //   } else {
+  //     navigate("/");
+  //   }
+  // }, []);
+
   return (
     <>
       <header>
