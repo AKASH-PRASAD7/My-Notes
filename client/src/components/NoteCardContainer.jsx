@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import NoteCard from "./NoteCard";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllNotes } from "../redux/notes/notes.action";
 
 const style = {
   position: "absolute",
@@ -18,14 +20,30 @@ const style = {
   p: 4,
 };
 
-const NoteCardContainer = () => {
+const NoteCardContainer = ({ data }) => {
+  const state = useSelector((gloabalstae) => gloabalstae.notes);
+  const dispatch = useDispatch();
+  const [notes, setNotes] = useState({});
+  const getNotes = () => {
+    dispatch(getAllNotes());
+    setNotes(state.data || {});
+  };
+
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  useEffect(() => {
+    getNotes();
+  }, [notes]);
   return (
     <>
       <section className="text-white flex flex-col gap-5 items-center">
-        <div className="m-6 ">
+        <div className="m-6 flex justify-between gap-5 items-center">
+          {data && (
+            <p className="text-2xl font-semibold">
+              Welcome back {data.name} 👋{" "}
+            </p>
+          )}
           <Button onClick={handleOpen} variant="contained" color="success">
             + Add Note
           </Button>
@@ -46,42 +64,21 @@ const NoteCardContainer = () => {
           </Modal>
         </div>
         <div className="flex flex-wrap justify-around gap-5  w-4/5 ">
-          <NoteCard
-            title={"hello"}
-            type={"hi"}
-            description={"hows"}
-            createdAt={"todyay"}
-          />
-          <NoteCard
-            title={"hello"}
-            type={"hi"}
-            description={"hows"}
-            createdAt={"todyay"}
-          />
-          <NoteCard
-            title={"hello"}
-            type={"hi"}
-            description={"hows"}
-            createdAt={"todyay"}
-          />
-          <NoteCard
-            title={"hello"}
-            type={"hi"}
-            description={"hows"}
-            createdAt={"todyay"}
-          />
-          <NoteCard
-            title={"hello"}
-            type={"hi"}
-            description={"hows"}
-            createdAt={"todyay"}
-          />
-          <NoteCard
-            title={"hello"}
-            type={"hi"}
-            description={"hows"}
-            createdAt={"todyay"}
-          />
+          {notes.allNotes ? (
+            notes.allNotes.map((element) => {
+              return (
+                <NoteCard
+                  key={element._id}
+                  title={element.title}
+                  type={element.type}
+                  description={element.description}
+                  createdAt={element.createdAt}
+                />
+              );
+            })
+          ) : (
+            <p>Please add Notes!</p>
+          )}
         </div>
       </section>
     </>

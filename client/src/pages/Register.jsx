@@ -47,9 +47,9 @@ const defaultTheme = createTheme();
 const Registar = () => {
   //cookie
   const [cookie, setCookie] = useState();
-  setCookie(getCookie("jwtToken"));
+  // setCookie(getCookie("jwtToken"));
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const dispatch = useDispatch();
   const state = useSelector((globalstate) => globalstate.user.data);
