@@ -13,7 +13,7 @@ const Home = () => {
   return (
     <>
       <Navabar />
-      <NoteCardContainer data={userData && userData.data} />
+      <NoteCardContainer />
     </>
   );
 };

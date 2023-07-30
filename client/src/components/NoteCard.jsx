@@ -1,15 +1,29 @@
 import React from "react";
 import { FaPencil, FaTrashCan } from "react-icons/fa6";
 
-const NoteCard = ({ title, type, description, createdAt }) => {
+const NoteCard = ({
+  title,
+  type,
+  id,
+  description,
+  createdAt,
+  update,
+  Delete,
+}) => {
   return (
     <>
       <section className="flex-col  gap-4 w-48  rounded-lg bg-purple-800">
         <div className="flex px-2 pt-2 pb-2 bg-purple-900 rounded-t-lg justify-between">
-          <i className="hover:text-cyan-700 text-lg cursor-pointer">
+          <i
+            onClick={() => update(id)}
+            className="hover:text-cyan-700 text-lg cursor-pointer"
+          >
             <FaPencil />
           </i>
-          <i className="hover:text-red-600 text-lg cursor-pointer">
+          <i
+            onClick={() => Delete(id)}
+            className="hover:text-red-600 text-lg cursor-pointer"
+          >
             <FaTrashCan />
           </i>
         </div>

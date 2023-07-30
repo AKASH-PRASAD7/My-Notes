@@ -38,10 +38,10 @@ router.post("/", verifyCookie, async (req, res) => {
 
 router.get("/", verifyCookie, async (req, res) => {
   try {
-    const { userid } = req.body;
+    const { userid, name } = req.body;
     const allNotes = await NotesModel.find({ userid: userid.toString() });
     if (allNotes.length !== 0) {
-      return res.status(200).json({ success: true, allNotes });
+      return res.status(200).json({ success: true, name, allNotes });
     }
     return res
       .status(404)
