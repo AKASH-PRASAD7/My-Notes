@@ -32,7 +32,6 @@ const notes = (state = initialstate, action) => {
       };
     case ERROR:
       return {
-        ...state,
         ...action.payload,
       };
     default:
