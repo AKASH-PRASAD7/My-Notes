@@ -4,11 +4,16 @@ import {
   DELETE_NOTE,
   UPDATE_NOTE,
   ERROR,
+  LOADING,
 } from "./notes.type";
 import axios from "axios";
 
 export const getAllNotes = () => async (dispatch) => {
   try {
+    dispatch({
+      type: LOADING,
+      payload: true,
+    });
     const notes = await axios.get("http://localhost:8000/notes", {
       withCredentials: true,
     });

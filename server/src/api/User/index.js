@@ -2,7 +2,7 @@ import express from "express";
 import res from "express/lib/response";
 const router = express.Router();
 import UserModel from "../../model/user/User.Model";
-
+import verifyUser from "../../middleware/index";
 /**
  * Route     /user
  * Des       Get all users
@@ -11,15 +11,15 @@ import UserModel from "../../model/user/User.Model";
  * Method    GET
  */
 
-router.get("/", async (req, res) => {
+router.get("/", verifyUser, async (req, res) => {
   try {
-    const users = await UserModel.find();
-    if (!users) {
+    const { user } = req.body;
+    if (!user) {
       return res
         .status(404)
         .json({ success: false, message: "No Users found" });
     }
-    return res.status(200).json({ success: true, users });
+    return res.status(200).json({ success: true, user });
   } catch (e) {
     res.status(500).json({ success: false, message: e.message });
   }
@@ -33,7 +33,7 @@ router.get("/", async (req, res) => {
  * Method    GET
  */
 
-router.get("/:id", async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const _id = req.params.id;
     const user = await UserModel.findById({ _id });

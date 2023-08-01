@@ -6,6 +6,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import NoteCard from "./NoteCard";
+import Loader from "./Loader";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getAllNotes,
@@ -33,14 +34,10 @@ const NoteCardContainer = () => {
   });
   const navigate = useNavigate();
   const state = useSelector((gloabalstae) => gloabalstae.notes);
+  const { loading, allNotes, name, success, error, notes } = state;
 
   const dispatch = useDispatch();
-  const [notes, setNotes] = useState([]);
 
-  const getNotes = () => {
-    dispatch(getAllNotes());
-    setNotes(state.allNotes);
-  };
   const [open, setOpen] = useState(false);
   const [type1, setType] = useState("add");
   const handleOpen = (text = "add") => {
@@ -69,21 +66,19 @@ const NoteCardContainer = () => {
       default:
         dispatch(getAllNotes());
     }
-    console.log("hi");
-
     handleClose();
-    getNotes();
-    console.log(notes);
+
+    dispatch(getAllNotes());
   };
 
   useEffect(() => {
-    getNotes();
-    if (!state.success) {
+    dispatch(getAllNotes());
+    if (error) {
       navigate("/");
     }
-  }, []);
+  }, [notes]);
 
-  //update
+  //updates
 
   const handleUpdate = (id) => {
     setNoteData({ ...noteData, _id: id });
@@ -101,10 +96,8 @@ const NoteCardContainer = () => {
     <>
       <section className="text-white flex flex-col gap-5 items-center">
         <div className="m-6 flex justify-between gap-5 items-center">
-          {state.name && (
-            <p className="text-2xl font-semibold">
-              Welcome back {state.name} 👋{" "}
-            </p>
+          {name && (
+            <p className="text-2xl font-semibold">Welcome back {name} 👋 </p>
           )}
           <Button
             onClick={() => handleOpen("add")}
@@ -218,26 +211,30 @@ const NoteCardContainer = () => {
             </Box>
           </Modal>
         </div>
-        <div className="flex flex-wrap justify-around gap-5  w-4/5 ">
-          {notes ? (
-            notes.map((element) => {
-              return (
-                <NoteCard
-                  update={handleUpdate}
-                  Delete={handleDelete}
-                  key={element._id}
-                  id={element._id}
-                  title={element.title}
-                  type={element.type}
-                  description={element.description}
-                  createdAt={element.createdAt}
-                />
-              );
-            })
-          ) : (
-            <p>Please add Notes!</p>
-          )}
-        </div>
+        {loading ? (
+          <Loader />
+        ) : (
+          <div className="flex flex-wrap justify-around gap-5  w-4/5 ">
+            {allNotes ? (
+              allNotes.map((element) => {
+                return (
+                  <NoteCard
+                    update={handleUpdate}
+                    Delete={handleDelete}
+                    key={element._id}
+                    id={element._id}
+                    title={element.title}
+                    type={element.type}
+                    description={element.description}
+                    createdAt={element.createdAt}
+                  />
+                );
+              })
+            ) : (
+              <p>Please add Notes!</p>
+            )}
+          </div>
+        )}
       </section>
     </>
   );

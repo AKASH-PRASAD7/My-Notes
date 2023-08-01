@@ -7,7 +7,7 @@ const verifyCookie = async (req, res, next) => {
     const token = jwt.verify(jwtToken, process.env.SECRET_KEY);
     const user = await UserModel.findOne({ _id: token.user });
     if (user) {
-      req.body = { userid: user._id, name: user.name, ...req.body };
+      req.body = { userid: user._id, name: user.name, user, ...req.body };
       next();
     } else {
       return res

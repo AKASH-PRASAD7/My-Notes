@@ -4,9 +4,13 @@ import {
   DELETE_NOTE,
   UPDATE_NOTE,
   ERROR,
+  LOADING,
 } from "./notes.type";
 
-const initialstate = {};
+const initialstate = {
+  loading: false,
+  allNotes: [],
+};
 
 const notes = (state = initialstate, action) => {
   switch (action.type) {
@@ -14,6 +18,7 @@ const notes = (state = initialstate, action) => {
       return {
         ...state,
         ...action.payload,
+        loading: false,
       };
     case ADD_NOTE:
       return {
@@ -30,8 +35,14 @@ const notes = (state = initialstate, action) => {
         ...state,
         ...action.payload,
       };
+    case LOADING:
+      return {
+        ...state,
+        loading: action.payload,
+      };
     case ERROR:
       return {
+        ...state,
         ...action.payload,
       };
     default:

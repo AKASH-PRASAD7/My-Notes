@@ -1,10 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Notelogo from "../Images/MyNote-logo.png";
 import { FaMagnifyingGlass, FaCircleUser } from "react-icons/fa6";
+import { signOut } from "../redux/user/action";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const Navabar = () => {
+  // const state = useSelector((gloabalstae) => gloabalstae.user);
   const [toggleHidden, setToggleHidden] = useState("hidden");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleUser = () => {
     toggleHidden === "hidden"
@@ -13,7 +19,11 @@ const Navabar = () => {
   };
   const handlSignOut = () => {
     console.log("sign out");
+    dispatch(signOut());
+    navigate("/");
+    setToggleHidden("hidden");
   };
+
   return (
     <>
       <nav className="w-vw z-10 sticky top-0 bg-gray-900 text-white h-16 flex justify-between px-4 items-center gap-2 relative">

@@ -63,10 +63,10 @@ router.get("/", verifyCookie, async (req, res) => {
 router.patch("/:notesId", verifyCookie, async (req, res) => {
   try {
     const { notesId } = req.params;
-    const { tittle, type, description, userid } = req.body;
+    const { title, type, description, userid } = req.body;
     const updateNote = await NotesModel.findOneAndUpdate(
       { _id: notesId, userid: userid.toString() },
-      { tittle, type, description },
+      { title, type, description },
       {
         new: true,
       }
