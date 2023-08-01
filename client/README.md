@@ -63,8 +63,3 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 Start taking notes with My Notes! If you have any questions or need further assistance, don't hesitate to reach out.
 
----
-
-Replace `<repository-url>` in the Installation section with the actual URL of your repository. Also, make sure to provide detailed instructions on how to set up the backend API if it's not already mentioned in the README.
-
-Feel free to customize the README further based on your specific project and any additional features you might have implemented. The README should serve as a helpful guide for others to understand and use your My Notes app effectively.
