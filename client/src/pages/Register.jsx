@@ -1,9 +1,7 @@
-import React, { useLayoutEffect, useState } from "react";
+import React, { useLayoutEffect } from "react";
 import logo from "../Images/MyNote-logo.png";
 import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 import "../App.css";
-import getCookie from "../utils/getCookie";
 
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -14,7 +12,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-
+import { useNavigate } from "react-router-dom";
 //redux
 import { useSelector, useDispatch } from "react-redux";
 import { signUp } from "../redux/user/action";
@@ -45,12 +43,7 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 const Registar = () => {
-  //cookie
-  const [cookie, setCookie] = useState();
-  // setCookie(getCookie("jwtToken"));
-
-  // const navigate = useNavigate();
-
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const state = useSelector((globalstate) => globalstate.user.data);
 
@@ -66,12 +59,13 @@ const Registar = () => {
     dispatch(signUp(userData));
   };
 
-  // useLayoutEffect(() => {
-  //   if (cookie) {
-  //     navigate("/home");
-  //   }
-  //   // eslint-disable-next-line
-  // }, [state, cookie]);
+  useLayoutEffect(() => {
+    const { success } = state || false;
+    if (success) {
+      navigate("/home");
+    }
+    // eslint-disable-next-line
+  }, [state]);
 
   return (
     <>

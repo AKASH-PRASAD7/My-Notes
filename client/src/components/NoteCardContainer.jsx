@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import NoteCard from "./NoteCard";
 import Loader from "./Loader";
@@ -34,7 +33,7 @@ const NoteCardContainer = () => {
   });
   const navigate = useNavigate();
   const state = useSelector((gloabalstae) => gloabalstae.notes);
-  const { loading, allNotes, name, success, error, notes } = state;
+  const { loading, allNotes, name, error, notes } = state;
 
   const dispatch = useDispatch();
 
@@ -76,7 +75,8 @@ const NoteCardContainer = () => {
     if (error) {
       navigate("/");
     }
-  }, [notes]);
+    // eslint-disable-next-line
+  }, [notes, state.updateNote, state.deleteNote]);
 
   //updates
 

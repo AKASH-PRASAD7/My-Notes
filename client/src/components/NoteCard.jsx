@@ -12,8 +12,8 @@ const NoteCard = ({
 }) => {
   return (
     <>
-      <section className="flex-col  gap-4 w-48  rounded-lg bg-purple-800">
-        <div className="flex px-2 pt-2 pb-2 bg-purple-900 rounded-t-lg justify-between">
+      <section className="flex-col  gap-4 w-48  rounded-lg bg-gray-800">
+        <div className="flex px-2 pt-2 pb-2 bg-gray-900 rounded-t-lg justify-between">
           <i
             onClick={() => update(id)}
             className="hover:text-cyan-700 text-lg cursor-pointer"
@@ -53,13 +53,13 @@ const NoteCard = ({
           <label htmlFor="description" className="ml-2">
             Description:
           </label>
-          <input
+          <textarea
             className="text-cyan-800  rounded-lg px-2 outline-none m-2"
-            type="text"
-            name="description"
             readOnly
-            id="description"
             value={description}
+            name="description"
+            cols="20"
+            rows="3"
           />
           <label htmlFor="createdAt" className="ml-2">
             Created At:

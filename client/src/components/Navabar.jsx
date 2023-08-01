@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const Navabar = () => {
-  // const state = useSelector((gloabalstae) => gloabalstae.user);
   const [toggleHidden, setToggleHidden] = useState("hidden");
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -54,9 +53,6 @@ const Navabar = () => {
             </li>
             <li>
               <Link to="/about">About</Link>
-            </li>
-            <li>
-              <Link to="/account">Account</Link>
             </li>
           </ul>
         </div>
